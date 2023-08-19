@@ -18,4 +18,4 @@ for i in range(0,10000):
 		if  (x1[i]==1 and x2[i]==1):
 			countI2=countI2+1
 print("(i) P(E|F) "+str(countI1/countF1))
-print("(i) P(E|F) "+str(countI2/countF2))
+print("(ii) P(E|F) "+str(countI2/countF2))

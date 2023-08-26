@@ -614,7 +614,7 @@ plt.ylabel('$y$')
 plt.legend(loc='best')
 plt.grid() # minor
 plt.axis('equal')
-plt.savefig('/home/saiharshith/EE23010/RandVertices/figs/Q1.4.1.png')
+plt.savefig('RandVertices/figs/Q1.4.1.png')
 plt.show()
 #Plotting all lines
 plt.plot(x_AB[0,:],x_AB[1,:],label='$AB$')
@@ -639,7 +639,7 @@ plt.axis('equal')
 
 #if using termux
 #plt.savefig('tri_sss.pdf')
-plt.savefig('/home/saiharshith/EE23010/RandVertices/figs/Q1.1.3.png')
+plt.savefig('RandVertices/figs/Q1.1.3.png')
 plt.show()
 
 #Plotting all lines
@@ -664,7 +664,7 @@ plt.ylabel('$y$')
 plt.legend(loc='best')
 plt.grid() # minor
 plt.axis('equal')
-plt.savefig('/home/saiharshith/EE23010/RandVertices/figs/Q1.2.2.png')
+plt.savefig('RandVertices/figs/Q1.2.2.png')
 plt.show()
 
 #Plotting all lines
@@ -696,7 +696,7 @@ plt.ylabel('$y$')
 plt.legend(loc='best')
 plt.grid() # minor
 plt.axis('equal')
-plt.savefig('/home/saiharshith/EE23010/RandVertices/figs/Q1.3.4.png')
+plt.savefig('RandVertices/figs/Q1.3.4.png')
 plt.show()
 
 #plotting Angle bisectors
@@ -735,7 +735,7 @@ plt.ylabel('$y$')
 plt.legend(loc='best')
 plt.grid() # minor
 plt.axis('equal')
-plt.savefig('/home/saiharshith/EE23010/RandVertices/figs/Q1.5.1.png')
+plt.savefig('RandVertices/figs/Q1.5.1.png')
 plt.show()
 
 #Plotting all lines
@@ -763,7 +763,7 @@ plt.ylabel('$y$')
 plt.legend(loc='best')
 plt.grid() 
 plt.axis('equal')
-plt.savefig('/home/saiharshith/EE23010/RandVertices/figs/Q1.4.5.png')
+plt.savefig('RandVertices/figs/Q1.4.5.png')
 plt.show()
 
 #plotiing the lines
@@ -794,6 +794,6 @@ plt.legend(loc='best')
 plt.grid() # minor
 plt.axis('equal')
 
-plt.savefig('/home/saiharshith/EE23010/RandVertices/figs/Q1.5.7.png')
+plt.savefig('RandVertices/figs/Q1.5.7.png')
 plt.show()
 

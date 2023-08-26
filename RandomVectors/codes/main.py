@@ -614,7 +614,7 @@ plt.ylabel('$y$')
 plt.legend(loc='best')
 plt.grid() # minor
 plt.axis('equal')
-plt.savefig('RandVertices/figs/Q1.4.1.png')
+plt.savefig('RandomVectors/figs/Q1.4.1.png')
 plt.show()
 #Plotting all lines
 plt.plot(x_AB[0,:],x_AB[1,:],label='$AB$')

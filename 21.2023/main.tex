@@ -1,0 +1,101 @@
+\let\negmedspace\undefined
+\let\negthickspace\undefined
+\documentclass[journal,12pt,twocolumn]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{txfonts}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{comment}
+\usepackage[breaklinks=true]{hyperref}
+\usepackage{tkz-euclide} 
+\usepackage{listings}
+\usepackage{gvv}                                        
+\def\inputGnumericTable{}                                 
+\usepackage[latin1]{inputenc}                                
+\usepackage{color}                                            
+\usepackage{array}                                            
+\usepackage{longtable}                                       
+\usepackage{calc}                                             
+\usepackage{multirow}                                         
+\usepackage{hhline}                                           
+\usepackage{ifthen}                                           
+\usepackage{lscape}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{problem}{Problem}
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}[section]
+\newtheorem{definition}[problem]{Definition}
+\newcommand{\BEQA}{\begin{eqnarray}}
+\newcommand{\EEQA}{\end{eqnarray}}
+\newcommand{\define}{\stackrel{\triangle}{=}}
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}
+\begin{document}
+
+\bibliographystyle{IEEEtran}
+\vspace{3cm}
+
+\title{Probability Assignment}
+\author{EE22BTECH11022-G.SAI HARSHITH$^{*}$% <-this % stops a space
+}
+\maketitle
+\newpage
+\bigskip
+\renewcommand{\thefigure}{\theenumi}
+\renewcommand{\thetable}{\theenumi}
+
+Question: Let $\{X_n\}_{n \geq 1}$ and Let $\{Y_n\}_{n \geq 1}$ be two sequences of random variables and $X$ and $Y$
+be two random variables, all of them defined on the same probability space.
+Which one of the following statements is true?
+\begin{enumerate}[label=(\Alph*)]
+\item If $\{X_n\}_{n \geq 1}$ converges in distribution to a real constant $c$, then $\{X_n\}_{n \geq 1}$
+converges in probability to $c$.
+\item If $\{X_n\}_{n \geq 1}$ converges in probability to $X$, then $\{X_n\}_{n \geq 1}$ converges in $3^{rd}$ mean
+to $X$.
+\item If $\{X_n\}_{n \geq 1}$ converges in distribution to $X$ and $\{Y_n\}_{n \geq 1}$ converges in
+distribution to $Y$, then $\{X_n + Y_n\}_{n \geq 1}$ converges in distribution to $X+Y$.
+\item If $\{E\brak{X_n}\}_{n \geq 1}$ converges to $E(X)$, then $\{X_n\}_{n \geq 1}$ converges in $1^{st}$ mean to $X$.
+\end{enumerate}
+\solution \\
+$X_n$ converges in distribution to $X$, $X_n \xrightarrow{d} X$, then for all x,
+\begin{align}
+F_{X_n}(x) &\xrightarrow{} F_X(x)
+\end{align}
+$X_n$ converges in probability to $X$, $X_n \xrightarrow{p} X$, then for all $\epsilon > 0$,
+\begin{align}
+lim_{n \to \infty} \pr{|X_n-X|>\epsilon}&=0
+\label{eq:1}
+\end{align}
+For $\epsilon > 0$, $B$ be defined as
+\begin{align}
+B&=\{x: |x-c| \geq \epsilon\}
+\end{align}
+Now,
+\begin{align}
+\pr{|X_n-c| \geq \epsilon}&= \pr{X_n \in B}
+\end{align}
+Using Portmanteau Lemma, if $X_n \xrightarrow{d} c$, we have
+\begin{align}
+\limsup\limits_{n \to \infty}\pr{X_n \in B} & \leq \pr{c \in B}\\
+& \leq \pr{|0-0|\geq \epsilon}\\
+& \leq \pr{0\geq \epsilon}\\
+& \leq 0\\
+&=0\\
+lim_{n \to \infty} \pr{|X_n-c|>\epsilon}&=0
+\end{align}
+From \eqref{eq:1}, $X_n \xrightarrow{p} c$. So, we have
+\begin{align}
+X_n \xrightarrow{d} c \implies X_n \xrightarrow{p} c
+\end{align}
+Option (A) is correct.
+\end{document}

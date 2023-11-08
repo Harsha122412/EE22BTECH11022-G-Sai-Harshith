@@ -1,0 +1,264 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Music Player</title>
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-image: url('{% static 'images/space.jpg' %}');
+            background-size: cover;
+        }
+        .song-list {
+            float: left;
+            width: 30%;
+            padding: 10px;
+        }
+
+        .song {
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .song:hover {
+            background-color: black;
+        }
+
+        .song.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .bufont{
+            color: white;
+        }
+
+        #audio-container {
+            position: fixed;
+            top: 50px;
+            right: 0;
+            width: 30%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #music-player {
+            margin-top: 20px;
+        }
+
+        #now-playing {
+            margin-top: 15px; /* Adjust the margin to move it down */
+            text-align: center;
+        }
+
+        #controls {
+            margin-top: 15px; /* Adjust the margin to move it down by the same length */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .control-button {
+            width: 100px; /* Adjust button size as needed */
+            height: 40px;
+            margin: 5px;
+            border-radius: 20px; /* Add rounded borders */
+            background-color: #007bff; /* Set blue color */
+            color: #fff; /* Set text color to white */
+            transition: background-color 0.3s; /* Add transition for hover effect */
+        }
+
+        .control-button:hover {
+            background-color: #000; /* Change background color on hover to black */
+        }
+        #shuffle-checkbox{
+        	transform: scale(2);
+        	margin-top:60px;
+        }
+        /* Set dimensions for the carousel */
+        #carouselExample {
+            position: fixed;
+            max-width: 400px; /* Set the maximum width of the carousel */
+            margin-left: 500px; /* Center the carousel horizontally */
+            margin-top: 30px;
+        }
+
+        .carousel-inner {
+            height: 600px; /* Set the maximum height of the carousel */
+            width: 600px;
+        }
+        
+        .carousel-item img {
+            max-width: 100%;
+            height: auto; /* Maintain the aspect ratio */
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Music Player</a>
+    </nav>
+    <div class="container">
+        <div class="song-list">
+            {% for song in songs %}
+                <div class="song" onclick="playSong('{{ song.path }}', {{ forloop.counter }})">
+                    <p class="bufont">Song {{ forloop.counter }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div id="carouselExample" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'images/i1.jpeg'%}" alt="Image 1">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'images/i2.jpg'%}" alt="Image 2">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'images/i3.jpg'%}" alt="Image 3">
+        </div>
+    </div>
+</div>
+        <div id="audio-container">
+            <h2>Now Playing:</h2>
+            <audio id="audio-player" controls></audio>
+            <div id="now-playing">
+                <div id="controls">
+                    <button id="shuffle-button" class="control-button">Shuffle</button>
+                    <button id="previous-button" class="control-button">Previous</button>
+                    <button id="next-button" class="control-button">Next</button>
+                    <button id="last-button" class="control-button">Last Song</button>
+                    
+        		<input type="checkbox" id="shuffle-checkbox">
+ 			<label for="shuffle-checkbox">Shuffle</label>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    var audio = document.querySelector('#audio-player');
+    var currentSongNumber = 0;
+    var shuffleCheckbox = document.querySelector('#shuffle-checkbox');
+
+    // Initial event listener for the "ended" event
+    audio.addEventListener('ended', playNextSong);
+
+    shuffleCheckbox.addEventListener('change', function() {
+        if (shuffleCheckbox.checked) {
+            // If the "shuffle" checkbox is checked, use playRandomSong
+            alert('Shuffled');
+            audio.removeEventListener('ended', playNextSong);
+            audio.addEventListener('ended', playRandomSong);
+        } else {
+            // If the "shuffle" checkbox is not checked, use playNextSong
+            alert('queued');
+            audio.removeEventListener('ended', playRandomSong);
+            audio.addEventListener('ended', playNextSong);
+        }
+    });
+
+    function playSong(path, songNumber) {
+        var currentlyPlaying = document.querySelector('.song.active');
+        if (currentlyPlaying) {
+            currentlyPlaying.classList.remove('active');
+        }
+
+        audio.src = path;
+        audio.play();
+
+        var songElement = document.querySelector(`.song:nth-child(${songNumber}`);
+        if (songElement) {
+            songElement.classList.add('active');
+        }
+
+        currentSongNumber = songNumber;
+    }
+
+    function playNextSong() {
+        var nextSongNumber = currentSongNumber + 1;
+        var nextSongElement = document.querySelector(`.song:nth-child(${nextSongNumber}`);
+
+        if (nextSongElement) {
+            var nextSongPath = nextSongElement.getAttribute('onclick').match(/playSong\('(.*?)'/)[1];
+            playSong(nextSongPath, nextSongNumber);
+        } else {
+            var firstSongElement = document.querySelector(`.song:first-child`);
+            if (firstSongElement) {
+                var firstSongPath = firstSongElement.getAttribute('onclick').match(/playSong\('(.*?)'/)[1];
+                playSong(firstSongPath, 1);
+            }
+        }
+    }
+
+    document.getElementById('next-button').addEventListener('click', playNextSong);
+
+    function playPreviousSong() {
+        var previousSongNumber = currentSongNumber - 1;
+        if (previousSongNumber > 0) {
+            var previousSongElement = document.querySelector(`.song:nth-child(${previousSongNumber}`);
+            var previousSongPath = previousSongElement.getAttribute('onclick').match(/playSong\('(.*?)'/)[1];
+            playSong(previousSongPath, previousSongNumber);
+        } else {
+            var lastSongElement = document.querySelector(`.song:last-child`);
+            if (lastSongElement) {
+                var lastSongPath = lastSongElement.getAttribute('onclick').match(/playSong\('(.*?)'/)[1];
+                var maxSongNumber = {{ songs|length }};
+                playSong(lastSongPath, maxSongNumber);
+            }
+        }
+    }
+
+    document.getElementById('previous-button').addEventListener('click', playPreviousSong);
+
+    function playRandomSong() {
+        var maxSongNumber = {{ songs|length }};
+        var randomSongNumber = Math.floor(Math.random() * maxSongNumber) + 1;
+
+        var randomSongElement = document.querySelector(`.song:nth-child(${randomSongNumber}`);
+        if (randomSongElement) {
+            var randomSongPath = randomSongElement.getAttribute('onclick').match(/playSong\('(.*?)'/)[1];
+            playSong(randomSongPath, randomSongNumber);
+        }
+    }
+    document.getElementById('shuffle-button').addEventListener('click', playRandomSong);
+    function playSong(path, songNumber) {
+        var currentlyPlaying = document.querySelector('.song.active');
+        if (currentlyPlaying) {
+            currentlyPlaying.classList.remove('active');
+        }
+
+        audio.src = path;
+        audio.play();
+
+        var songElement = document.querySelector(`.song:nth-child(${songNumber}`);
+        if (songElement) {
+            songElement.classList.add('active');
+        }
+
+        lastSongNumber = currentSongNumber; // Store the current song as the last played song
+        currentSongNumber = songNumber;
+    }
+
+    function playLastSong() {
+        if (lastSongNumber > 0) {
+            var lastSongElement = document.querySelector(`.song:nth-child(${lastSongNumber}`);
+            var lastSongPath = lastSongElement.getAttribute('onclick').match(/playSong\('(.*?)'/)[1];
+            playSong(lastSongPath, lastSongNumber);
+        }
+    }
+
+    document.getElementById('last-button').addEventListener('click', playLastSong);
+    $(document).ready(function() {
+        $('.carousel').carousel({
+            interval: 4000 // Set the interval in milliseconds (4 seconds)
+        });
+    });
+</script>
+
+
+</body>
+</html>
